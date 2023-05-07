@@ -41,10 +41,11 @@ public:
 // private:
 //     Course *registeredCourses;
 //     int numRegisteredCourses;
+//     string rollNo;
 
 // public:
 //     Student();
-//     Student(Course *rCourses, int nRCourses);
+//     Student(Course *rCourses, int nRCourses, string RollNo);
 //     void attemptQuiz();
 //     void viewResults();
 // };
