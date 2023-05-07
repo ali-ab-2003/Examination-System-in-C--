@@ -5,6 +5,7 @@
 #include <string>
 #include <ctime>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -29,6 +30,7 @@ public:
 // class Teacher : public User
 // {
 // public:
+//     Teacher();
 //     void updateQuizBank();
 //     void createQuiz();
 //     void viewAnalytics();
@@ -190,26 +192,27 @@ public:
 //     void generateAvgPerCourse();
 // };
 
-// class FileManager
-// {
-// public:
-//     void readFile(string fileName);
-//     void writeFile(string fileName, void *data, int size);
-// };
+class FileManager
+{
+public:
+    void readTxtFile(string fileName);
+    void readCsvFile(string fileName);
+    void writeFile(string fileName, void *data, int size);
+};
 
-// class Menu
-// {
-// private:
-//     string title;
-//     string *options;
-//     int numOfOptions;
+class Menu
+{
+private:
+    string title;
+    string *options;
+    int numOfOptions;
 
-// public:
-//     Menu();
-//     Menu(string t, string *opts, int numOfOpts);
-//     void displayMenu();
-//     int getUserInput();
-// };
+public:
+    Menu();
+    Menu(string Title, string *opts, int numOfOpts);
+    void displayMenu();
+    int getUserInput();
+};
 
 // class Date
 // {
@@ -248,8 +251,9 @@ public:
 class Authenticator
 {
 public:
-    bool authenticatePass(string pass);
-    bool authenticateEmail(string email);
+    Authenticator();
+    static bool authenticatePass(string pass);
+    static bool authenticateEmail(string email);
 };
 
 #endif

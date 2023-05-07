@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <ctime>
+#include <string>
 #include "examinationSystem.h"
 
 using namespace std;
@@ -44,6 +46,10 @@ string User::getEmail()
 string User::getPassword()
 {
     return password;
+}
+
+Authenticator::Authenticator()
+{
 }
 
 bool Authenticator::authenticatePass(string pass)
@@ -92,33 +98,14 @@ bool Authenticator::authenticatePass(string pass)
         }
     }
 
-    if (lenCheck == false)
-    {
-        cout << "Error: The password should only contain 6-50 characters" << endl;
-    }
-
-    if (isUpper == false)
-    {
-        cout << "Error: The password should contain atleast one uppercase character" << endl;
-    }
-
-    if (isLower == false)
-    {
-        cout << "Error: The password should contain atleast one lowercase character" << endl;
-    }
-
-    if (digitCheck == false)
-    {
-        cout << "Error: The password should contain atleast one digit" << endl;
-    }
-
     if (isLower == true && isUpper == true && digitCheck == true && lenCheck == true)
     {
         passCheck = true;
     }
-    else
+
+    if (lenCheck == false || isUpper == false || isLower == false || digitCheck == false)
     {
-        passCheck = false;
+        cout << "The password be atleast 6 characters long and should contain atleast one uppercase, one lowercase character and a digit" << endl;
     }
 
     return passCheck;
@@ -185,4 +172,41 @@ bool Authenticator::authenticateEmail(string email)
     }
 
     return true;
+}
+
+Menu::Menu()
+{
+    title = " ";
+    options = new string[1];
+    options[0] = '\0';
+    numOfOptions = 0;
+}
+
+Menu::Menu(string Title, string *opts, int numOfOpts)
+{
+    title = Title;
+    numOfOptions = numOfOpts;
+    options = new string[numOfOpts];
+    for (int i = 0; i < numOfOpts; i++)
+    {
+        options[i] = opts[i];
+    }
+}
+
+void Menu::displayMenu()
+{
+    cout << title << endl;
+    for (int i = 0; i < numOfOptions; i++)
+    {
+        cout << options[i] << endl;
+    }
+}
+
+int Menu::getUserInput()
+{
+    int input = 0;
+    cout << "Type the option number of what you want to select: ";
+    cin >> input;
+
+    return input;
 }
