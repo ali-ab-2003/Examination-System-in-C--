@@ -8,7 +8,7 @@ using namespace std;
 
 void generatePassword()
 {
-    const int numOfPasswords = 216;
+    const int numOfPasswords = 11;
     const int minLen = 6;
     const int maxLen = 12;
 
@@ -28,7 +28,7 @@ void generatePassword()
                                       '9'};
     const string specialChars = "!@#$%^&*()-_=+[]{}|;:/?.,<>";
 
-    ofstream outFile("passwords.txt");
+    ofstream outFile("Teacher Passwords.txt");
 
     if (outFile.is_open())
     {
