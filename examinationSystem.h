@@ -193,13 +193,13 @@ public:
 //     void generateAvgPerCourse();
 // };
 
-class FileManager
-{
-public:
-    void readTxtFile(string fileName);
-    void readCsvFile(string fileName);
-    void writeFile(string fileName, void *data, int size);
-};
+// class FileManager
+// {
+// public:
+//     void readTxtFile(string fileName);
+//     void readCsvFile(string fileName);
+//     void writeFile(string fileName, void *data, int size);
+// };
 
 class Menu
 {
@@ -255,6 +255,8 @@ public:
     Authenticator();
     static bool authenticatePass(string pass);
     static bool authenticateEmail(string email);
+    // static bool crossCheckTeacher(string pass, string email);
+    // static bool crossCheckStudent(string pass, string email);
 };
 
 #endif
