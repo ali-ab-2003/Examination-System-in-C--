@@ -41,13 +41,13 @@ public:
 class Student : public User
 {
 private:
-    // Course *registeredCourses;
+    Course *registeredCourses;
     int numRegisteredCourses;
     string rollNo;
 
 public:
     Student();
-    // Student(Course *rCourses, int nRCourses, string RollNo);
+    Student(Course *rCourses, int nRCourses, string RollNo);
     void setRollNo(string RollNo);
     void setNoRegCourses(int nrc);
     void setRegCourses();
@@ -67,10 +67,10 @@ public:
     Course(string cName, string cCode, string cInstructor);
     void setCourseName(string cName);
     void setCourseCode(string cCode);
-    void setInstructor(Teacher insDetails);
+    void setCourseInstructor(string insDetails);
     string getCourseName();
     string getCourseCode();
-    Teacher getCourseInstructor();
+    string getCourseInstructor();
 };
 
 // class Question

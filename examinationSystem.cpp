@@ -215,6 +215,14 @@ int Menu::getUserInput()
     return input;
 }
 
+Teacher::Teacher()
+{
+}
+
+void Teacher::updateQuizBank()
+{
+}
+
 Teacher::Teacher(const string &name) : User(name)
 {
 }
@@ -235,4 +243,41 @@ Course::Course()
     courseName = "";
     courseCode = "";
     courseInstructor = "";
+}
+
+Course::Course(string cName, string cCode, string cInstructor)
+{
+    courseName = cName;
+    courseCode = cCode;
+    courseInstructor = cInstructor;
+}
+
+void Course::setCourseName(string cName)
+{
+    courseName = cName;
+}
+
+void Course::setCourseCode(string cCode)
+{
+    courseCode = cCode;
+}
+
+void Course::setCourseInstructor(string insDetails)
+{
+    courseInstructor = insDetails;
+}
+
+string Course::getCourseName()
+{
+    return courseName;
+}
+
+string Course::getCourseCode()
+{
+    return courseCode;
+}
+
+string Course::getCourseInstructor()
+{
+    return courseInstructor;
 }
