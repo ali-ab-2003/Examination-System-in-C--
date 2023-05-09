@@ -18,6 +18,10 @@ User::User(string Name, string Email, string Password) : name(Name), email(Email
 {
 }
 
+User::User(const string &name) : name(name)
+{
+}
+
 void User::setName(string n)
 {
     name = n;
@@ -209,4 +213,26 @@ int Menu::getUserInput()
     cin >> input;
 
     return input;
+}
+
+Teacher::Teacher(const string &name) : User(name)
+{
+}
+
+Student::Student()
+{
+    numRegisteredCourses = 0;
+    rollNo = "";
+}
+
+void Student::setRollNo(string RollNo)
+{
+    rollNo = RollNo;
+}
+
+Course::Course()
+{
+    courseName = "";
+    courseCode = "";
+    courseInstructor = "";
 }

@@ -19,6 +19,7 @@ protected:
 public:
     User();
     User(string Name, string Email, string Password);
+    User(const string &name);
     void setName(string n);
     void setEmail(string Email);
     void setPassword(string p);
@@ -27,46 +28,50 @@ public:
     string getPassword();
 };
 
-// class Teacher : public User
-// {
-// public:
-//     Teacher();
-//     void updateQuizBank();
-//     void createQuiz();
-//     void viewAnalytics();
-// };
+class Teacher : public User
+{
+public:
+    Teacher();
+    Teacher(const string &name);
+    static void updateQuizBank();
+    static void createQuiz();
+    static void viewAnalytics();
+};
 
-// class Student : public User
-// {
-// private:
-//     Course *registeredCourses;
-//     int numRegisteredCourses;
-//     string rollNo;
+class Student : public User
+{
+private:
+    // Course *registeredCourses;
+    int numRegisteredCourses;
+    string rollNo;
 
-// public:
-//     Student();
-//     Student(Course *rCourses, int nRCourses, string RollNo);
-//     void attemptQuiz();
-//     void viewResults();
-// };
+public:
+    Student();
+    // Student(Course *rCourses, int nRCourses, string RollNo);
+    void setRollNo(string RollNo);
+    void setNoRegCourses(int nrc);
+    void setRegCourses();
+    void attemptQuiz();
+    void viewResults();
+};
 
-// class Course
-// {
-// private:
-//     string courseName;
-//     string courseCode;
-//     Teacher courseInstructor;
+class Course
+{
+private:
+    string courseName;
+    string courseCode;
+    string courseInstructor;
 
-// public:
-//     Course();
-//     Course(string cName, string cCode, Teacher cInstructor);
-//     void setCourseName(string cName);
-//     void setCourseCode(string cCode);
-//     void setInstructor(Teacher insDetails);
-//     string getCourseName();
-//     string getCourseCode();
-//     Teacher getCourseInstructor();
-// };
+public:
+    Course();
+    Course(string cName, string cCode, string cInstructor);
+    void setCourseName(string cName);
+    void setCourseCode(string cCode);
+    void setInstructor(Teacher insDetails);
+    string getCourseName();
+    string getCourseCode();
+    Teacher getCourseInstructor();
+};
 
 // class Question
 // {
@@ -191,14 +196,6 @@ public:
 //     void generateAttendance();
 //     void generateQDifficulty();
 //     void generateAvgPerCourse();
-// };
-
-// class FileManager
-// {
-// public:
-//     void readTxtFile(string fileName);
-//     void readCsvFile(string fileName);
-//     void writeFile(string fileName, void *data, int size);
 // };
 
 class Menu
