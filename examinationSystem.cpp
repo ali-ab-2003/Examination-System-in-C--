@@ -229,8 +229,122 @@ Course Teacher::getCourse()
     return course;
 }
 
-void Teacher::updateQuizBank()
+void Teacher::updateQuizBank(string courseName)
 {
+    // open the existing file and read all existing questions
+    string fileName = courseName + "Quiz Bank.txt";
+    ifstream inputfile(fileName);
+    string line = "", questions = "";
+    while (getline(inputfile, line))
+    {
+        questions += line += "\n";
+    }
+    inputfile.close();
+
+    ofstream outputFile(fileName, ios_base::app); // open the quiz bank file in append mode to add new questions
+
+    string newQuestion = "", qType = "", topic = "", qText = "", options = "", correctOption = ""; // create a new question of user requested type
+
+    cout << "Enter the type of question (MCQ, True/False, Subjective): ";
+    cin >> qType; // ask user to choose the type of question to be added
+
+    cout << "Enter the topic: ";
+    cin.ignore();
+    getline(cin, topic);
+
+    bool topicAlreadyExists = false; // to check if the topic already exists
+    int position = 0;
+    while (position < questions.length())
+    {
+        int topicPosition = questions.find("a5380ee", position);
+        if (topicPosition == -1)
+        {
+            break;
+        }
+        int nextTopicPosition = questions.find("a5380ee", topicPosition + 1);
+        if (nextTopicPosition == -1)
+        {
+            nextTopicPosition = questions.length();
+        }
+        if (questions.substr(topicPosition + 10, nextTopicPosition - (topicPosition + 10)) == topic)
+        {
+            newQuestion += "a5380ee\n" + topic;
+            if (qType == "MCQ")
+            {
+                newQuestion += "2efcde9\n" + qText + "\n";
+            }
+            else if (qType == "True/False")
+            {
+                newQuestion += "b94d27b\n" + qText + "\n";
+            }
+            else if (qType == "Subjective")
+            {
+                newQuestion += "88f7ace\n" + qText + "\n";
+            }
+
+            if (qType == "MCQ" || qType == "True/False")
+            {
+                cout << "Enter the options (one per line, enter a period to stop):\n";
+                while (true)
+                {
+                    getline(cin, options);
+                    if (options == ".")
+                    {
+                        break;
+                    }
+                    newQuestion += options + "\n";
+                }
+                cout << "Enter the correct option: ";
+                getline(cin, correctOption);
+                newQuestion += "dabfac4: " + correctOption + "\n";
+            }
+            newQuestion += "\n";
+
+            questions.insert(nextTopicPosition, newQuestion);
+            topicAlreadyExists = true;
+            break;
+        }
+        position = nextTopicPosition;
+    }
+
+    if (!topicAlreadyExists) // in case topic does not already exist
+    {
+        newQuestion += "a5380ee\n" + topic;
+        if (qType == "MCQ")
+        {
+            newQuestion += "2efcde9\n" + qText + "\n";
+        }
+        else if (qType == "True/False")
+        {
+            newQuestion += "b94d27b\n" + qText + "\n";
+        }
+        else if (qType == " Subjective")
+        {
+            newQuestion += "88f7ace\n" + qText + "\n";
+        }
+
+        if (qType == "MCQ" || qType == "True/False")
+        {
+            cout << "Enter the options (one per line, enter a period to stop):\n";
+            while (true)
+            {
+                getline(cin, options);
+                if (options == ".")
+                {
+                    break;
+                }
+                newQuestion += options + "\n";
+            }
+            cout << "Enter the correct option: ";
+            getline(cin, correctOption);
+            newQuestion += "dabfac4: " + correctOption + "\n";
+        }
+        newQuestion += "\n";
+
+        outputFile << newQuestion; // write the new question to the end of quiz bank
+    }
+
+    outputFile.close(); // close the output stream
 }
 
 Teacher::Teacher(Course c)
@@ -292,3 +406,35 @@ string Course::getCourseInstructor()
 {
     return courseInstructor;
 }
+
+// Question::Question()
+// {
+//     questionText = "";
+//     questionType = "";
+// }
+
+// Question::Question(string qText, string qType)
+// {
+//     questionText = qText;
+//     questionType = qType;
+// }
+
+// void Question::setQuestionText(string qText)
+// {
+//     questionText = qText;
+// }
+
+// void Question::setQuestionType(string qType)
+// {
+//     questionType = qType;
+// }
+
+// string Question::getQuestionText()
+// {
+//     return questionText;
+// }
+
+// string Question::getQuestionType()
+// {
+//     return questionType;
+// }

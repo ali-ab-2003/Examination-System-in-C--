@@ -56,7 +56,7 @@ public:
     Teacher(Course c);
     void setCourse(Course c);
     Course getCourse();
-    static void updateQuizBank();
+    static void updateQuizBank(string courseName);
     static void createQuiz();
     static void viewAnalytics();
 };
@@ -257,8 +257,6 @@ public:
     Authenticator();
     static bool authenticatePass(string pass);
     static bool authenticateEmail(string email);
-    // static bool crossCheckTeacher(string pass, string email);
-    // static bool crossCheckStudent(string pass, string email);
 };
 
 #endif
