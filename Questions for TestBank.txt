@@ -100,3 +100,32 @@ b
 c
 dabfac4: a
 
+a5380ee
+OOP
+
+2efcde9
+re classes an OOP concept?
+a. yes
+b. no
+dabfac4: a. yes
+
+a5380ee
+OOP
+
+2efcde9
+hat is this?
+a
+b
+c
+dabfac4: c
+
+a5380ee
+OOP
+
+2efcde9
+What?
+t
+c
+v
+dabfac4: v
+

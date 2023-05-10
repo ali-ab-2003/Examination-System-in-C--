@@ -271,14 +271,20 @@ void Teacher::updateQuizBank(string courseName)
             newQuestion += "a5380ee\n" + topic + "\n\n";
             if (qType == "MCQ")
             {
+                cout << "Enter the question: ";
+                getline(cin, qText);
                 newQuestion += "2efcde9\n" + qText + "\n";
             }
             else if (qType == "True/False")
             {
+                cout << "Enter the statement: ";
+                getline(cin, qText);
                 newQuestion += "b94d27b\n" + qText + "\n";
             }
             else if (qType == "Subjective")
             {
+                cout << "Enter the question: ";
+                getline(cin, qText);
                 newQuestion += "88f7ace\n" + qText + "\n";
             }
 
@@ -312,14 +318,20 @@ void Teacher::updateQuizBank(string courseName)
         newQuestion += "a5380ee\n" + topic + "\n\n";
         if (qType == "MCQ")
         {
+            cout << "Enter the question: ";
+            getline(cin, qText);
             newQuestion += "2efcde9\n" + qText + "\n";
         }
         else if (qType == "True/False")
         {
+            cout << "Enter the statement: ";
+            getline(cin, qText);
             newQuestion += "b94d27b\n" + qText + "\n";
         }
         else if (qType == " Subjective")
         {
+            cout << "Enter the question: ";
+            getline(cin, qText);
             newQuestion += "88f7ace\n" + qText + "\n";
         }
 
