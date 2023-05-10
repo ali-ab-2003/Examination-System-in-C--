@@ -188,50 +188,62 @@ int main()
         }
 
         Teacher teacher;
+        bool pfCheck = false, oopCheck = false, itcCheck = false, dsCheck = false, aoaCheck = false, sreCheck = false, rmCheck = false, bdaCheck = false, aiCheck = false, dlCheck = false, dipCheck = false;
 
         if (user.getName() == pf.getCourseInstructor())
         {
             teacher.setCourse(pf);
+            pfCheck = true;
         }
         else if (user.getName() == oop.getCourseInstructor())
         {
             teacher.setCourse(oop);
+            oopCheck = true;
         }
         else if (user.getName() == itc.getCourseInstructor())
         {
             teacher.setCourse(itc);
+            itcCheck = true;
         }
         else if (user.getName() == ds.getCourseInstructor())
         {
             teacher.setCourse(ds);
+            dsCheck = true;
         }
         else if (user.getName() == aoa.getCourseInstructor())
         {
             teacher.setCourse(aoa);
+            aoaCheck = true;
         }
         else if (user.getName() == sre.getCourseInstructor())
         {
             teacher.setCourse(sre);
+            sreCheck = true;
         }
         else if (user.getName() == rm.getCourseInstructor())
         {
             teacher.setCourse(rm);
+            rmCheck = true;
         }
         else if (user.getName() == bda.getCourseInstructor())
         {
             teacher.setCourse(bda);
+            bdaCheck = true;
         }
         else if (user.getName() == ai.getCourseInstructor())
         {
             teacher.setCourse(ai);
+            aiCheck = true;
         }
         else if (user.getName() == dl.getCourseInstructor())
         {
             teacher.setCourse(dl);
+            dlCheck = true;
         }
         else
         {
             teacher.setCourse(dip);
+            dipCheck = true;
         }
 
         string *teacherFunctions = new string[3];
@@ -244,6 +256,55 @@ int main()
         int tOpts = 0;
         teacherOptions.displayMenu();
         tOpts = teacherOptions.getUserInput();
+
+        if (tOpts == 1)
+        {
+            teacher.updateQuizBank("Questions for TestBank.txt");
+            // if (pfCheck == true)
+            // {
+            //     teacher.updateQuizBank("Programming Fundamentals");
+            // }
+            // else if (oopCheck == true)
+            // {
+            //     teacher.updateQuizBank("Object Oriented Programming");
+            // }
+            // else if (itcCheck == true)
+            // {
+            //     teacher.updateQuizBank("Introduction to Computing");
+            // }
+            // else if (dsCheck == true)
+            // {
+            //     teacher.updateQuizBank("Data Structures");
+            // }
+            // else if (aoaCheck == true)
+            // {
+            //     teacher.updateQuizBank("Analysis of Algorithms");
+            // }
+            // else if (sreCheck == true)
+            // {
+            //     teacher.updateQuizBank("Software Requirements Engineering");
+            // }
+            // else if (rmCheck == true)
+            // {
+            //     teacher.updateQuizBank("Research Methodology");
+            // }
+            // else if (bdaCheck == true)
+            // {
+            //     teacher.updateQuizBank("Big Data Analysis");
+            // }
+            // else if (aiCheck == true)
+            // {
+            //     teacher.updateQuizBank("Artificial Intelligence");
+            // }
+            // else if (dlCheck == true)
+            // {
+            //     teacher.updateQuizBank("Deep Learning");
+            // }
+            // else if (dipCheck == true)
+            // {
+            //     teacher.updateQuizBank("Digital Image Processing");
+            // }
+        }
 
         // for (int i = 0; i < 11; i++)   //code to check if checks implemented are working correctly
         // {

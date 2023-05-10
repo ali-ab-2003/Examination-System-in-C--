@@ -232,8 +232,8 @@ Course Teacher::getCourse()
 void Teacher::updateQuizBank(string courseName)
 {
     // open the existing file and read all existing questions
-    string fileName = courseName + "Quiz Bank.txt";
-    ifstream inputfile(fileName);
+    // string fileName = courseName;
+    ifstream inputfile(courseName);
     string line = "", questions = "";
     while (getline(inputfile, line))
     {
@@ -241,7 +241,7 @@ void Teacher::updateQuizBank(string courseName)
     }
     inputfile.close();
 
-    ofstream outputFile(fileName, ios_base::app); // open the quiz bank file in append mode to add new questions
+    ofstream outputFile(courseName, ios_base::app); // open the quiz bank file in append mode to add new questions
 
     string newQuestion = "", qType = "", topic = "", qText = "", options = "", correctOption = ""; // create a new question of user requested type
 
@@ -268,7 +268,7 @@ void Teacher::updateQuizBank(string courseName)
         }
         if (questions.substr(topicPosition + 10, nextTopicPosition - (topicPosition + 10)) == topic)
         {
-            newQuestion += "a5380ee\n" + topic;
+            newQuestion += "a5380ee\n" + topic + "\n\n";
             if (qType == "MCQ")
             {
                 newQuestion += "2efcde9\n" + qText + "\n";
@@ -309,7 +309,7 @@ void Teacher::updateQuizBank(string courseName)
 
     if (!topicAlreadyExists) // in case topic does not already exist
     {
-        newQuestion += "a5380ee\n" + topic;
+        newQuestion += "a5380ee\n" + topic + "\n\n";
         if (qType == "MCQ")
         {
             newQuestion += "2efcde9\n" + qText + "\n";
