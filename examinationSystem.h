@@ -30,9 +30,14 @@ public:
 
 class Teacher : public User
 {
+private:
+    Course course;
+
 public:
     Teacher();
-    Teacher(const string &name);
+    Teacher(const string &name, Course c);
+    void setCourse(Course c);
+    Course getCourse();
     static void updateQuizBank();
     static void createQuiz();
     static void viewAnalytics();

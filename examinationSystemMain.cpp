@@ -13,6 +13,18 @@ int main()
     userTypeOptions[0] = "1. Teacher";
     userTypeOptions[1] = "2. Student";
 
+    Course pf("Programming Fundamentals", "CS 101", "Dr. Hassan Mujtaba"); // Available Courses
+    Course oop("Object Oriented Programming", "CS 201", "Dr. Ishtiaq");
+    Course itc("Introduction to Computing", "CS 102", "Dr. Hassan Raza");
+    Course ds("Data Structures", "CS 301", "Dr. Adil Majeed");
+    Course aoa("Analysis of Algorithms", "CS 302", "Dr. Omer Beig");
+    Course sre("Software Requirements Engineering", "SE 301", "Dr. Naveed");
+    Course rm("Research Methodology", "CS 501", "Dr. Abdul Salam");
+    Course bda("Big Data Analytics", "CS 407", "Dr. Khubaib Amjad");
+    Course ai("Artificial Intelligence", "CS 307", "Dr. Waseem Shahzad");
+    Course dl("Deep Learning", "CS 601", "Dr. Hammad Majeed");
+    Course dip("Digital Image Processing", "CS 409", "Dr. Muhammad Asim");
+
     Menu userTypeMenu("Welcome to FAST Spring 2023 OOP Project\nExamination System\nSelect the user type to proceed to the next menu", userTypeOptions, 2);
     userTypeMenu.displayMenu();
     // int stdOrTeacher = userTypeMenu.getUserInput();
@@ -175,7 +187,54 @@ int main()
             }
         }
 
-        // for (int i = 0; i < 11; i++)
+        Teacher teacher;
+
+        if (user.getName() == pf.getCourseInstructor())
+        {
+            teacher.setCourse(pf);
+        }
+        else if (user.getName() == oop.getCourseInstructor())
+        {
+            teacher.setCourse(oop);
+        }
+        else if (user.getName() == itc.getCourseInstructor())
+        {
+            teacher.setCourse(itc);
+        }
+        else if (user.getName() == ds.getCourseInstructor())
+        {
+            teacher.setCourse(ds);
+        }
+        else if (user.getName() == aoa.getCourseInstructor())
+        {
+            teacher.setCourse(aoa);
+        }
+        else if (user.getName() == sre.getCourseInstructor())
+        {
+            teacher.setCourse(sre);
+        }
+        else if (user.getName() == rm.getCourseInstructor())
+        {
+            teacher.setCourse(rm);
+        }
+        else if (user.getName() == bda.getCourseInstructor())
+        {
+            teacher.setCourse(bda);
+        }
+        else if (user.getName() == ai.getCourseInstructor())
+        {
+            teacher.setCourse(ai);
+        }
+        else if (user.getName() == dl.getCourseInstructor())
+        {
+            teacher.setCourse(dl);
+        }
+        else
+        {
+            teacher.setCourse(dip);
+        }
+
+        // for (int i = 0; i < 11; i++)   //code to check if checks implemented are working correctly
         // {
         //     for (int j = 0; j < 2; j++)
         //     {
@@ -328,7 +387,7 @@ int main()
             }
         }
 
-        // for (int i = 0; i < 11; i++)
+        // for (int i = 0; i < 11; i++)    //code to check if checks implemented are working correctly
         // {
         //     for (int j = 0; j < 2; j++)
         //     {

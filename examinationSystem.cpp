@@ -219,12 +219,23 @@ Teacher::Teacher()
 {
 }
 
+void Teacher::setCourse(Course c)
+{
+    course = c;
+}
+
+Course Teacher::getCourse()
+{
+    return course;
+}
+
 void Teacher::updateQuizBank()
 {
 }
 
-Teacher::Teacher(const string &name) : User(name)
+Teacher::Teacher(const string &name, Course c) : User(name)
 {
+    course = c;
 }
 
 Student::Student()
