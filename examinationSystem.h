@@ -28,6 +28,24 @@ public:
     string getPassword();
 };
 
+class Course
+{
+private:
+    string courseName;
+    string courseCode;
+    string courseInstructor;
+
+public:
+    Course();
+    Course(string cName, string cCode, string cInstructor);
+    void setCourseName(string cName);
+    void setCourseCode(string cCode);
+    void setCourseInstructor(string insDetails);
+    string getCourseName();
+    string getCourseCode();
+    string getCourseInstructor();
+};
+
 class Teacher : public User
 {
 private:
@@ -35,7 +53,7 @@ private:
 
 public:
     Teacher();
-    Teacher(const string &name, Course c);
+    Teacher(Course c);
     void setCourse(Course c);
     Course getCourse();
     static void updateQuizBank();
@@ -58,24 +76,6 @@ public:
     void setRegCourses();
     void attemptQuiz();
     void viewResults();
-};
-
-class Course
-{
-private:
-    string courseName;
-    string courseCode;
-    string courseInstructor;
-
-public:
-    Course();
-    Course(string cName, string cCode, string cInstructor);
-    void setCourseName(string cName);
-    void setCourseCode(string cCode);
-    void setCourseInstructor(string insDetails);
-    string getCourseName();
-    string getCourseCode();
-    string getCourseInstructor();
 };
 
 // class Question

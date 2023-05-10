@@ -234,6 +234,17 @@ int main()
             teacher.setCourse(dip);
         }
 
+        string *teacherFunctions = new string[3];
+        teacherFunctions[0] = "1. Update Quiz Bank";
+        teacherFunctions[1] = "2. Create Quiz";
+        teacherFunctions[2] = "3. View Analytics";
+
+        cout << "Welcome back, " << user.getName() << "!" << endl;
+        Menu teacherOptions("Teacher Functions Menu", teacherFunctions, 3);
+        int tOpts = 0;
+        teacherOptions.displayMenu();
+        tOpts = teacherOptions.getUserInput();
+
         // for (int i = 0; i < 11; i++)   //code to check if checks implemented are working correctly
         // {
         //     for (int j = 0; j < 2; j++)

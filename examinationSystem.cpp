@@ -209,7 +209,7 @@ void Menu::displayMenu()
 int Menu::getUserInput()
 {
     int input = 0;
-    cout << "Type the option number of what you want to select: ";
+    cout << "Type the option number that you want to select: ";
     cin >> input;
 
     return input;
@@ -233,7 +233,7 @@ void Teacher::updateQuizBank()
 {
 }
 
-Teacher::Teacher(const string &name, Course c) : User(name)
+Teacher::Teacher(Course c)
 {
     course = c;
 }
