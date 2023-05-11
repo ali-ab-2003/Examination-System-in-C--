@@ -3,6 +3,8 @@
 #include <sstream>
 #include <ctime>
 #include <string>
+#include <vector>
+#include <chrono>
 #include "examinationSystem.cpp"
 
 using namespace std;
@@ -304,6 +306,10 @@ int main()
             {
                 teacher.updateQuizBank("Digital Image Processing Quiz Bank.txt");
             }
+        }
+        else if (tOpts == 2)
+        {
+            teacher.createQuiz("Questions for TestBank.txt");
         }
 
         // for (int i = 0; i < 11; i++)   //code to check if checks implemented are working correctly

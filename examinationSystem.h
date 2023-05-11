@@ -57,7 +57,7 @@ public:
     void setCourse(Course c);
     Course getCourse();
     void updateQuizBank(string courseName);
-    void createQuiz();
+    void createQuiz(string qBankFileName);
     void viewAnalytics();
 };
 

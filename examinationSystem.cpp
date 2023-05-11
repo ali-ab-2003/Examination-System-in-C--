@@ -3,6 +3,8 @@
 #include <sstream>
 #include <ctime>
 #include <string>
+#include <vector>
+#include <chrono>
 #include "examinationSystem.h"
 
 using namespace std;
@@ -364,8 +366,190 @@ void Teacher::updateQuizBank(string courseName)
     outputFile.close(); // close the output stream
 }
 
-void Teacher::createQuiz()
+int countOccurence(const string &s, const string &subs)
 {
+    int count = 0;
+    int position = 0;
+    while ((position = s.find(subs, position)) != string::npos)
+    {
+        count++;
+        position += subs.length();
+    }
+    return count;
+}
+
+void getRandomQuestions(const string &topics, int numOfQuestions, string &selectedQuestions)
+{
+    string t = topics;
+    int startPosition = 0;
+    for (int i = 0; i < numOfQuestions; i++)
+    {
+        int endPosition = t.find("\n\n", startPosition);
+        string question = t.substr(startPosition, endPosition - startPosition);
+
+        selectedQuestions += question + "\n\n";
+
+        t = t.substr(endPosition + 2);
+        startPosition = 0;
+    }
+}
+
+string getTimeStamp()
+{
+    time_t now = time(0);
+    struct tm *timeInfo;
+    char buffer[80];
+    timeInfo = localtime(&now);
+    strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", timeInfo);
+    return string(buffer);
+}
+
+void Teacher::createQuiz(string qBankFileName)
+{
+    ifstream inputFile(qBankFileName); // open quiz bank file
+    if (!inputFile)
+    {
+        cout << "Quiz bank file does not exist for this course\n";
+        return;
+    }
+
+    string line = "";
+    string questions = "", question = "";
+    while (getline(inputFile, line))
+    {
+        if (line == "a5380ee" || line == "2efcde9" || line == "b94d27b" || line == "88f7ace")
+        {
+            if (!question.empty())
+            {
+                questions += question;
+                question.clear();
+            }
+            question += line + "\n";
+        }
+        else
+        {
+            question += line + "\n";
+        }
+    }
+    if (!question.empty())
+    {
+        questions += question;
+    }
+
+    inputFile.close();
+
+    string selectedTopics = ""; // asl teacher to select topics for the quiz
+    int numOfTopics = 0;
+    cout << "Enter the number of topics you want to include in this quiz: ";
+    cin >> numOfTopics;
+    cin.ignore();
+
+    vector<string> topicNames;
+    vector<int> topicNumQuestions;
+    vector<int> topicMarks;
+
+    for (int i = 0; i < numOfTopics; i++)
+    {
+        cout << "Enter topic " << i + 1 << ": ";
+        string topic = "";
+        getline(cin, topic);
+        selectedTopics += topic + "\n";
+        topicNames.push_back(topic);
+    }
+
+    for (int i = 0; i < numOfTopics; i++)
+    {
+        string topic = topicNames[i];
+        cout << "Enter the number of questions for topic '" << topicNames[i] << "': ";
+        int temp = 0;
+        cin >> temp;
+        topicNumQuestions.push_back(temp);
+
+        cout << "Enter the marks for each question in topic '" << topicNames[i] << "': ";
+        int marks = 0;
+        cin >> marks;
+        topicMarks.push_back(marks);
+        cin.ignore();
+    }
+
+    int timeLimit = 0; // ask teacher to set time limit for the quiz
+    cout << "Enter the time limit for the quiz (in mins): ";
+    cin >> timeLimit;
+
+    auto now = chrono::system_clock::now();
+    auto endTime = now + chrono::minutes(timeLimit);
+    srand(time(0));
+
+    cout << "\nQuiz Generated:\n"; // just to display the time limits in the quiz file
+    cout << "******************\n";
+    cout << "Time Limit: " << timeLimit << " minutes\n";
+    cout << "End time: " << chrono::system_clock::to_time_t(endTime) << "\n";
+    cout << "******************\n";
+
+    int totalMarks = 0;
+
+    string deadLine = to_string(chrono::system_clock::to_time_t(endTime));
+
+    string timeStamp = getTimeStamp();
+    string quizFileName = course.getCourseCode() + " Quiz " + timeStamp + ".txt";
+    ofstream outputFile(quizFileName);
+    if (outputFile)
+    {
+        outputFile << "Quiz Generated:\n";
+        outputFile << "******************\n";
+        outputFile << "Time Limit: " << timeLimit << " minutes\n";
+        outputFile << "Deadline: " << deadLine << "\n";
+        outputFile << "******************\n\n";
+
+        for (int i = 0; i < numOfTopics; i++)
+        {
+            string topic = topicNames[i];
+
+            int topicStartPosition = questions.find("a5380ee\n" + topic);
+            int topicEndPosition = questions.find("a5380ee", topicStartPosition + 1);
+
+            if (topicStartPosition != string::npos && topicEndPosition != string::npos)
+            {
+                string topicQuestions = questions.substr(topicStartPosition, topicEndPosition - topicStartPosition);
+                int numTopicQuestions = countOccurence(topicQuestions, "a5380ee:");
+
+                if (numTopicQuestions < topicNumQuestions[i])
+                {
+                    cout << "Insufficient questions in topic '" << topic << "'. Skipping the topic\n";
+                    continue;
+                }
+
+                cout << "Topic: " << topic << " (Number of Questions: " << topicNumQuestions[i] << ", Marks per Question: " << topicMarks[i] << ")\n\n";
+
+                string selectedQuestions = "";
+                getRandomQuestions(topicQuestions, topicNumQuestions[i], selectedQuestions);
+
+                int questionStartPosition = 0;
+                for (int j = 0; j < topicNumQuestions[i]; j++)
+                {
+                    int questionEndPosition = selectedQuestions.find("\n\n", questionStartPosition);
+                    string question2 = selectedQuestions.substr(questionStartPosition, questionEndPosition - questionStartPosition);
+
+                    cout << question2 << "\n";
+                    totalMarks += topicMarks[i];
+
+                    questionStartPosition = questionEndPosition + 2;
+                }
+                cout << "\n";
+                outputFile << "\n";
+            }
+        }
+
+        outputFile << "**************\n";
+        outputFile << "Total marks: " << totalMarks << "\n";
+        outputFile << "**************\n";
+        outputFile.close();
+        cout << "Quiz generated and saved to file: " << quizFileName << "\n";
+    }
+    else
+    {
+        cout << "Failed to create quiz file\n";
+    }
 }
 
 Student::Student()
