@@ -56,9 +56,9 @@ public:
     Teacher(Course c);
     void setCourse(Course c);
     Course getCourse();
-    static void updateQuizBank(string courseName);
-    static void createQuiz();
-    static void viewAnalytics();
+    void updateQuizBank(string courseName);
+    void createQuiz();
+    void viewAnalytics();
 };
 
 class Student : public User

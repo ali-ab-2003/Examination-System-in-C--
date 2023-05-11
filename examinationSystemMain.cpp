@@ -259,51 +259,51 @@ int main()
 
         if (tOpts == 1)
         {
-            teacher.updateQuizBank("Questions for TestBank.txt");
-            // if (pfCheck == true)
-            // {
-            //     teacher.updateQuizBank("Programming Fundamentals");
-            // }
-            // else if (oopCheck == true)
-            // {
-            //     teacher.updateQuizBank("Object Oriented Programming");
-            // }
-            // else if (itcCheck == true)
-            // {
-            //     teacher.updateQuizBank("Introduction to Computing");
-            // }
-            // else if (dsCheck == true)
-            // {
-            //     teacher.updateQuizBank("Data Structures");
-            // }
-            // else if (aoaCheck == true)
-            // {
-            //     teacher.updateQuizBank("Analysis of Algorithms");
-            // }
-            // else if (sreCheck == true)
-            // {
-            //     teacher.updateQuizBank("Software Requirements Engineering");
-            // }
-            // else if (rmCheck == true)
-            // {
-            //     teacher.updateQuizBank("Research Methodology");
-            // }
-            // else if (bdaCheck == true)
-            // {
-            //     teacher.updateQuizBank("Big Data Analysis");
-            // }
-            // else if (aiCheck == true)
-            // {
-            //     teacher.updateQuizBank("Artificial Intelligence");
-            // }
-            // else if (dlCheck == true)
-            // {
-            //     teacher.updateQuizBank("Deep Learning");
-            // }
-            // else if (dipCheck == true)
-            // {
-            //     teacher.updateQuizBank("Digital Image Processing");
-            // }
+            // teacher.updateQuizBank("Questions for TestBank.txt"); // just to check if function is working properly
+            if (pfCheck == true)
+            {
+                teacher.updateQuizBank("Programming Fundamentals Quiz Bank.txt");
+            }
+            else if (oopCheck == true)
+            {
+                teacher.updateQuizBank("Object Oriented Programming Quiz Bank.txt");
+            }
+            else if (itcCheck == true)
+            {
+                teacher.updateQuizBank("Introduction to Computing Quiz Bank.txt");
+            }
+            else if (dsCheck == true)
+            {
+                teacher.updateQuizBank("Data Structures Quiz Bank.txt");
+            }
+            else if (aoaCheck == true)
+            {
+                teacher.updateQuizBank("Analysis of Algorithms Quiz Bank.txt");
+            }
+            else if (sreCheck == true)
+            {
+                teacher.updateQuizBank("Software Requirements Engineering Quiz Bank.txt");
+            }
+            else if (rmCheck == true)
+            {
+                teacher.updateQuizBank("Research Methodology Quiz Bank.txt");
+            }
+            else if (bdaCheck == true)
+            {
+                teacher.updateQuizBank("Big Data Analysis Quiz Bank.txt");
+            }
+            else if (aiCheck == true)
+            {
+                teacher.updateQuizBank("Artificial Intelligence Quiz Bank.txt");
+            }
+            else if (dlCheck == true)
+            {
+                teacher.updateQuizBank("Deep Learning Quiz Bank.txt");
+            }
+            else if (dipCheck == true)
+            {
+                teacher.updateQuizBank("Digital Image Processing Quiz Bank.txt");
+            }
         }
 
         // for (int i = 0; i < 11; i++)   //code to check if checks implemented are working correctly

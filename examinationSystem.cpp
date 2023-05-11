@@ -219,6 +219,11 @@ Teacher::Teacher()
 {
 }
 
+Teacher::Teacher(Course c)
+{
+    course = c;
+}
+
 void Teacher::setCourse(Course c)
 {
     course = c;
@@ -328,7 +333,7 @@ void Teacher::updateQuizBank(string courseName)
             getline(cin, qText);
             newQuestion += "b94d27b\n" + qText + "\n";
         }
-        else if (qType == " Subjective")
+        else if (qType == "Subjective")
         {
             cout << "Enter the question: ";
             getline(cin, qText);
@@ -359,9 +364,8 @@ void Teacher::updateQuizBank(string courseName)
     outputFile.close(); // close the output stream
 }
 
-Teacher::Teacher(Course c)
+void Teacher::createQuiz()
 {
-    course = c;
 }
 
 Student::Student()

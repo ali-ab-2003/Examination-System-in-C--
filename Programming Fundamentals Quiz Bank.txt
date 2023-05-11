@@ -1,0 +1,11 @@
+a5380ee
+Pf
+
+2efcde9
+What would be the output of "cout<<Hello World;"?
+a. Hello World
+b. hello world
+c. error
+d. none of these
+dabfac4: c. error
+

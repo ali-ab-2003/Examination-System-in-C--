@@ -129,3 +129,22 @@ c
 v
 dabfac4: v
 
+a5380ee
+OOP
+
+b94d27b
+Is OOP a programminng concept?
+True
+False
+dabfac4: True
+
+a5380ee
+OOP
+
+
+a5380ee
+OOP
+
+88f7ace
+What is object oriented programming?
+
