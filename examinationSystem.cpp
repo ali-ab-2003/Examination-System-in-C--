@@ -381,16 +381,37 @@ int countOccurence(const string &s, const string &subs)
 void getRandomQuestions(const string &topics, int numOfQuestions, string &selectedQuestions)
 {
     string t = topics;
-    int startPosition = 0;
-    for (int i = 0; i < numOfQuestions; i++)
+    vector<string> questions;
+
+    int startPosition = 0, endPosition = 0;
+
+    while ((endPosition = t.find("\n\n", startPosition)) != string::npos)
     {
-        int endPosition = t.find("\n\n", startPosition);
         string question = t.substr(startPosition, endPosition - startPosition);
+        questions.push_back(question);
 
-        selectedQuestions += question + "\n\n";
+        startPosition = endPosition + 2;
+    }
 
-        t = t.substr(endPosition + 2);
-        startPosition = 0;
+    if (questions.size() < numOfQuestions)
+    {
+        cout << "Not enough questions to select from\n";
+        return;
+    }
+
+    srand(time(0));
+    vector<bool> selected(questions.size(), false);
+
+    for (int i = 0; i < numOfQuestions;)
+    {
+        int index = rand() % questions.size();
+
+        if (!selected[index])
+        {
+            selectedQuestions += questions[index] + "\n\n";
+            selected[index] = true;
+            i++;
+        }
     }
 }
 
@@ -505,8 +526,13 @@ void Teacher::createQuiz(string qBankFileName)
         {
             string topic = topicNames[i];
 
-            int topicStartPosition = questions.find("a5380ee\n" + topic);
-            int topicEndPosition = questions.find("a5380ee", topicStartPosition + 1);
+            int topicStartPosition = questions.find("a5380ee\n" + topic + "\n");
+            int topicEndPosition = questions.find("a5380ee", topicStartPosition + topic.length() + 9);
+
+            // if (topicEndPosition == string::npos)
+            // {
+            //     topicEndPosition = questions.size();
+            // }
 
             if (topicStartPosition != string::npos && topicEndPosition != string::npos)
             {
@@ -520,6 +546,7 @@ void Teacher::createQuiz(string qBankFileName)
                 }
 
                 cout << "Topic: " << topic << " (Number of Questions: " << topicNumQuestions[i] << ", Marks per Question: " << topicMarks[i] << ")\n\n";
+                outputFile << "Topic: " << topic << " (Number of Questions: " << topicNumQuestions[i] << ", Marks per Question: " << topicMarks[i] << ")\n\n";
 
                 string selectedQuestions = "";
                 getRandomQuestions(topicQuestions, topicNumQuestions[i], selectedQuestions);
@@ -531,25 +558,28 @@ void Teacher::createQuiz(string qBankFileName)
                     string question2 = selectedQuestions.substr(questionStartPosition, questionEndPosition - questionStartPosition);
 
                     cout << question2 << "\n";
+                    outputFile << question2 << "\n";
                     totalMarks += topicMarks[i];
 
                     questionStartPosition = questionEndPosition + 2;
                 }
                 cout << "\n";
                 outputFile << "\n";
+                // totalMarks += topicNumQuestions[i] * topicMarks[i];
             }
         }
 
         outputFile << "**************\n";
         outputFile << "Total marks: " << totalMarks << "\n";
         outputFile << "**************\n";
-        outputFile.close();
+        // outputFile.close();
         cout << "Quiz generated and saved to file: " << quizFileName << "\n";
     }
     else
     {
         cout << "Failed to create quiz file\n";
     }
+    outputFile.close();
 }
 
 Student::Student()

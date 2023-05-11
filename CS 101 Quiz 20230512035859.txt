@@ -1,7 +1,7 @@
 Quiz Generated:
 ******************
-Time Limit: 2 minutes
-Deadline: 1683837196
+Time Limit: 3 minutes
+Deadline: 1683846119
 ******************
 
 **************
