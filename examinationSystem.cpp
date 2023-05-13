@@ -378,42 +378,42 @@ int countOccurence(const string &s, const string &subs)
     return count;
 }
 
-void getRandomQuestions(const string &topics, int numOfQuestions, string &selectedQuestions)
-{
-    string t = topics;
-    vector<string> questions;
+// void getRandomQuestions(const string &topics, int numOfQuestions, string &selectedQuestions)
+// {
+//     string t = topics;
+//     vector<string> questions;
 
-    int startPosition = 0, endPosition = 0;
+//     int startPosition = 0, endPosition = 0;
 
-    while ((endPosition = t.find("\n\n", startPosition)) != string::npos)
-    {
-        string question = t.substr(startPosition, endPosition - startPosition);
-        questions.push_back(question);
+//     while ((endPosition = t.find("\n\n", startPosition)) != string::npos)
+//     {
+//         string question = t.substr(startPosition, endPosition - startPosition);
+//         questions.push_back(question);
 
-        startPosition = endPosition + 2;
-    }
+//         startPosition = endPosition + 2;
+//     }
 
-    if (questions.size() < numOfQuestions)
-    {
-        cout << "Not enough questions to select from\n";
-        return;
-    }
+//     if (questions.size() < numOfQuestions)
+//     {
+//         cout << "Not enough questions to select from\n";
+//         return;
+//     }
 
-    srand(time(0));
-    vector<bool> selected(questions.size(), false);
+//     srand(time(0));
+//     vector<bool> selected(questions.size(), false);
 
-    for (int i = 0; i < numOfQuestions;)
-    {
-        int index = rand() % questions.size();
+//     for (int i = 0; i < numOfQuestions;)
+//     {
+//         int index = rand() % questions.size();
 
-        if (!selected[index])
-        {
-            selectedQuestions += questions[index] + "\n\n";
-            selected[index] = true;
-            i++;
-        }
-    }
-}
+//         if (!selected[index])
+//         {
+//             selectedQuestions += questions[index] + "\n\n";
+//             selected[index] = true;
+//             i++;
+//         }
+//     }
+// }
 
 string getTimeStamp()
 {
@@ -425,161 +425,171 @@ string getTimeStamp()
     return string(buffer);
 }
 
+// string getTopicQuestions(const string &questions, const string &topic)
+// {
+//     string topicQuestions = "";
+//     int topicStartPosition = questions.find("a5380ee " + topic + "\n");
+//     if (topicStartPosition == string::npos)
+//     {
+//         return topicQuestions;
+//     }
+
+//     int qStartPosition = questions.find("a5380ee:", topicStartPosition);
+//     int nextTopicStart = questions.find("a5380ee ", qStartPosition);
+
+//     while (qStartPosition != string::npos && (nextTopicStart == string::npos || qStartPosition < nextTopicStart))
+//     {
+//         int qEndPosition = questions.find("\n\n", qStartPosition);
+//         topicQuestions += questions.substr(qStartPosition, qEndPosition - qStartPosition + 1);
+//         qStartPosition = questions.find("a5380ee:", qEndPosition);
+//         nextTopicStart = questions.find("a5380ee ", qStartPosition);
+//     }
+
+//     return topicQuestions;
+// }
+
+struct Questions
+{
+    string topicName = "";
+    string questionStatement = "";
+    string options[4];
+    string descriptiveQuestion;
+    string trueFalse;
+    int correctOption = 0;
+    string optTF[2];
+} arr[100];
+
 void Teacher::createQuiz(string qBankFileName)
 {
-    ifstream inputFile(qBankFileName); // open quiz bank file
-    if (!inputFile)
-    {
-        cout << "Quiz bank file does not exist for this course\n";
-        return;
-    }
+    ifstream inputFile(qBankFileName);
+    int index = -1;
+    int k = 0;
+    string markers[5] = {"a5380ee", "2efcde9", "dabfac4", "b94d27b", "88f7ace"};
+    string temp = "";
+    string s = "";
+    Questions arr[100];
 
-    string line = "";
-    string questions = "", question = "";
-    while (getline(inputFile, line))
+    if (inputFile.is_open())
     {
-        if (line == "a5380ee" || line == "2efcde9" || line == "b94d27b" || line == "88f7ace")
+        while (getline(inputFile, s))
         {
-            if (!question.empty())
+            if (s == markers[0])
             {
-                questions += question;
-                question.clear();
+                getline(inputFile, temp);
             }
-            question += line + "\n";
+            else if (s == markers[1])
+            {
+                index++;
+                arr[index].topicName = temp;
+                getline(inputFile, arr[index].questionStatement);
+                getline(inputFile, s);
+                if (s[0] == 'o' && s[1] == 'p')
+                {
+                    arr[index].options[0] = s;
+                    getline(inputFile, arr[index].options[1]);
+                    getline(inputFile, arr[index].options[2]);
+                    getline(inputFile, arr[index].options[3]);
+                }
+                else
+                {
+                    arr[index].questionStatement = arr[index].questionStatement + "\n" + s;
+                    getline(inputFile, arr[index].options[0]);
+                    getline(inputFile, arr[index].options[1]);
+                    getline(inputFile, arr[index].options[2]);
+                    getline(inputFile, arr[index].options[3]);
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (arr[index].options[i].find(markers[2]) != string::npos)
+                    {
+                        arr[index].correctOption = i + 1;
+                    }
+                }
+            }
+            else if (s == markers[3])
+            {
+                index++;
+                arr[index].topicName = temp;
+                getline(inputFile, arr[index].trueFalse);
+                getline(inputFile, s);
+                if (s[0] == 'o' && s[1] == 'p')
+                {
+                    arr[index].optTF[0] = s;
+                    getline(inputFile, arr[index].optTF[1]);
+                }
+                else
+                {
+                    arr[index].trueFalse = arr[index].trueFalse + "\n" + s;
+                    getline(inputFile, arr[index].optTF[0]);
+                    getline(inputFile, arr[index].optTF[1]);
+                }
+                for (int i = 0; i < 2; i++)
+                {
+                    if (arr[index].optTF[i].find(markers[2]) != string::npos)
+                    {
+                        arr[index].correctOption = i + 1;
+                    }
+                }
+            }
+            else if (s == markers[4])
+            {
+                index++;
+                arr[index].topicName = temp;
+                getline(inputFile, arr[index].descriptiveQuestion);
+
+                while (getline(inputFile, s))
+                {
+                    if (s == markers[0] || s == markers[1] || s == markers[2] || s == markers[3] || s == markers[4])
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        arr[index].descriptiveQuestion = arr[index].descriptiveQuestion + "\n" + s;
+                    }
+                }
+            }
         }
-        else
-        {
-            question += line + "\n";
-        }
-    }
-    if (!question.empty())
-    {
-        questions += question;
     }
 
     inputFile.close();
 
-    string selectedTopics = ""; // asl teacher to select topics for the quiz
-    int numOfTopics = 0;
-    cout << "Enter the number of topics you want to include in this quiz: ";
-    cin >> numOfTopics;
-    cin.ignore();
+    string quizFileName = course.getCourseName() + ".txt";
+    ofstream quizFile(quizFileName);
 
-    vector<string> topicNames;
-    vector<int> topicNumQuestions;
-    vector<int> topicMarks;
-
-    for (int i = 0; i < numOfTopics; i++)
+    if (quizFile.is_open())
     {
-        cout << "Enter topic " << i + 1 << ": ";
-        string topic = "";
-        getline(cin, topic);
-        selectedTopics += topic + "\n";
-        topicNames.push_back(topic);
-    }
-
-    for (int i = 0; i < numOfTopics; i++)
-    {
-        string topic = topicNames[i];
-        cout << "Enter the number of questions for topic '" << topicNames[i] << "': ";
-        int temp = 0;
-        cin >> temp;
-        topicNumQuestions.push_back(temp);
-
-        cout << "Enter the marks for each question in topic '" << topicNames[i] << "': ";
-        int marks = 0;
-        cin >> marks;
-        topicMarks.push_back(marks);
-        cin.ignore();
-    }
-
-    int timeLimit = 0; // ask teacher to set time limit for the quiz
-    cout << "Enter the time limit for the quiz (in mins): ";
-    cin >> timeLimit;
-
-    auto now = chrono::system_clock::now();
-    auto endTime = now + chrono::minutes(timeLimit);
-    srand(time(0));
-
-    cout << "\nQuiz Generated:\n"; // just to display the time limits in the quiz file
-    cout << "******************\n";
-    cout << "Time Limit: " << timeLimit << " minutes\n";
-    cout << "End time: " << chrono::system_clock::to_time_t(endTime) << "\n";
-    cout << "******************\n";
-
-    int totalMarks = 0;
-
-    string deadLine = to_string(chrono::system_clock::to_time_t(endTime));
-
-    string timeStamp = getTimeStamp();
-    string quizFileName = course.getCourseCode() + " Quiz " + timeStamp + ".txt";
-    ofstream outputFile(quizFileName);
-    if (outputFile)
-    {
-        outputFile << "Quiz Generated:\n";
-        outputFile << "******************\n";
-        outputFile << "Time Limit: " << timeLimit << " minutes\n";
-        outputFile << "Deadline: " << deadLine << "\n";
-        outputFile << "******************\n\n";
-
-        for (int i = 0; i < numOfTopics; i++)
+        for (int i = 0; i <= index; i++)
         {
-            string topic = topicNames[i];
+            quizFile << "Topic: " << arr[i].topicName << "\n\n";
+            cout << "Topic: " << arr[i].topicName << "\n\n";
+            quizFile << "Question: " << arr[i].questionStatement << "\n\n";
+            cout << "Question: " << arr[i].questionStatement << "\n\n";
 
-            int topicStartPosition = questions.find("a5380ee\n" + topic + "\n");
-            int topicEndPosition = questions.find("a5380ee", topicStartPosition + topic.length() + 9);
-
-            // if (topicEndPosition == string::npos)
-            // {
-            //     topicEndPosition = questions.size();
-            // }
-
-            if (topicStartPosition != string::npos && topicEndPosition != string::npos)
+            if (arr[i].options[0].find("op") != string::npos)
             {
-                string topicQuestions = questions.substr(topicStartPosition, topicEndPosition - topicStartPosition);
-                int numTopicQuestions = countOccurence(topicQuestions, "a5380ee:");
-
-                if (numTopicQuestions < topicNumQuestions[i])
+                for (int j = 0; j < 4; j++)
                 {
-                    cout << "Insufficient questions in topic '" << topic << "'. Skipping the topic\n";
-                    continue;
+                    quizFile << arr[i].options[j] << "\n";
+                    cout << arr[i].options[j] << "\n";
                 }
-
-                cout << "Topic: " << topic << " (Number of Questions: " << topicNumQuestions[i] << ", Marks per Question: " << topicMarks[i] << ")\n\n";
-                outputFile << "Topic: " << topic << " (Number of Questions: " << topicNumQuestions[i] << ", Marks per Question: " << topicMarks[i] << ")\n\n";
-
-                string selectedQuestions = "";
-                getRandomQuestions(topicQuestions, topicNumQuestions[i], selectedQuestions);
-
-                int questionStartPosition = 0;
-                for (int j = 0; j < topicNumQuestions[i]; j++)
-                {
-                    int questionEndPosition = selectedQuestions.find("\n\n", questionStartPosition);
-                    string question2 = selectedQuestions.substr(questionStartPosition, questionEndPosition - questionStartPosition);
-
-                    cout << question2 << "\n";
-                    outputFile << question2 << "\n";
-                    totalMarks += topicMarks[i];
-
-                    questionStartPosition = questionEndPosition + 2;
-                }
-                cout << "\n";
-                outputFile << "\n";
-                // totalMarks += topicNumQuestions[i] * topicMarks[i];
             }
+            else
+            {
+                quizFile << "Options:\n";
+                cout << "Options:\n";
+                for (int j = 0; j < 4; j++)
+                {
+                    quizFile << j + 1 << ". " << arr[i].options[j] << "\n";
+                    cout << j + 1 << ". " << arr[i].options[j] << "\n";
+                }
+            }
+            quizFile << "Correct option: " << arr[i].correctOption << "\n\n";
+            cout << "Correct option: " << arr[i].correctOption << "\n\n";
         }
+    }
 
-        outputFile << "**************\n";
-        outputFile << "Total marks: " << totalMarks << "\n";
-        outputFile << "**************\n";
-        // outputFile.close();
-        cout << "Quiz generated and saved to file: " << quizFileName << "\n";
-    }
-    else
-    {
-        cout << "Failed to create quiz file\n";
-    }
-    outputFile.close();
+    quizFile.close();
 }
 
 Student::Student()

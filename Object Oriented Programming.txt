@@ -1,0 +1,95 @@
+Topic: General questions
+
+Question: What is the output of the following code
+cout << "Hello World" ;
+
+option: Hello
+option: World
+option dabfac4: Hello World
+option: None of the above
+Correct option: 3
+
+Topic: General questions
+
+Question: 
+
+Options:
+1. 
+2. 
+3. 
+4. 
+Correct option: 1
+
+Topic: General questions
+
+Question: What is the square of -2
+
+option dabfac4: 4
+option: -4
+option: 2
+option: -2
+Correct option: 1
+
+Topic: General questions
+
+Question: 
+
+Options:
+1. 
+2. 
+3. 
+4. 
+Correct option: 0
+
+Topic: General questions
+
+Question: Which of the following operators is used to access the member variables and functions of an object in C++?
+
+option: * (asterisk)
+option: -> (arrow)
+option dabfac4: . (dot)
+option: :: (scope resolution)
+Correct option: 3
+
+Topic: General questions
+
+Question: Which of the following is NOT a valid C++ variable name?
+
+option: num_students
+option: _score
+option dabfac4: 1student
+option: totalScore
+Correct option: 3
+
+Topic: General questions
+
+Question: 
+
+Options:
+1. 
+2. 
+3. 
+4. 
+Correct option: 1
+
+Topic: General questions
+
+Question: 
+
+Options:
+1. 
+2. 
+3. 
+4. 
+Correct option: 1
+
+Topic: Programming pointers
+
+Question: What is the value of a null pointer in C++?
+
+option dabfac4: 0
+option: 1
+option: -1
+option: undefined
+Correct option: 1
+
