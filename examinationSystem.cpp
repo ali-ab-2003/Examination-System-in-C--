@@ -513,6 +513,116 @@ string Student::getRegCourses()
     return registeredCourses;
 }
 
+// Answer::Answer()
+// {
+//     correctAnsMCQs = "";
+//     correctAnsTrueFalse = "";
+// }
+
+// Answer::Answer(string ca, string catf)
+// {
+//     correctAnsMCQs = ca;
+//     correctAnsTrueFalse = catf;
+// }
+
+// void Answer::setAnsMCQs(string ca)
+// {
+//     correctAnsMCQs = ca;
+// }
+
+// void Answer::setAnsTf(string catf)
+// {
+//     correctAnsTrueFalse = catf;
+// }
+
+// string Answer::getAnsMCQs()
+// {
+//     return correctAnsMCQs;
+// }
+
+// string Answer::getAnsTf()
+// {
+//     return correctAnsTrueFalse;
+// }
+
+void Student::attemptQuiz(string quizFileName)
+{
+    string *correctAns;
+    string *userInput;
+    int totalQuestions = 0, numOfMCQs = 0, numOfTrueFalse = 0, numOfSubjectives = 0;
+    string line = "";
+    int totalMarks = 0;
+
+    ifstream quiz(quizFileName);
+    if (!quiz.is_open())
+    {
+        cout << "Error opening the file" << endl;
+    }
+
+    while (getline(quiz, line))
+    {
+        if (line.find("2efcde9") != string::npos)
+        {
+            numOfMCQs++;
+        }
+        else if (line.find("b94d27b") != string::npos)
+        {
+            numOfTrueFalse++;
+        }
+        else if (line.find("88f7ace") != string::npos)
+        {
+            numOfSubjectives++;
+        }
+    }
+    totalQuestions = numOfMCQs + numOfSubjectives + numOfTrueFalse;
+    // cout << totalQuestions << endl;
+
+    correctAns = new string[numOfMCQs + numOfTrueFalse];
+    userInput = new string[totalQuestions];
+
+    quiz.clear();
+    quiz.seekg(0, ios::beg); // Reset the file pointer to the beginning of the file
+
+    string in = "";
+    int caIndex = 0, uiIndex = 0;
+    string line2 = "";
+    while (getline(quiz, line2))
+    {
+        cout << line2 << endl;
+        if (line2.find("dabfac4") != string::npos)
+        {
+            // cout << "ee";
+            correctAns[caIndex] = line2;
+            stringstream ss;
+            ss << "dabfac4: option. ";
+            cout << "Enter your answer: ";
+            getline(cin, in);
+            cin.ignore();
+            ss << in;
+            userInput[uiIndex] = ss.str(); //"dabfac4: option." + ;
+            cout << "User input:" << userInput[uiIndex] << endl;
+            cout << "User input:" << correctAns[caIndex] << endl;
+            if (correctAns[caIndex] == userInput[uiIndex])
+            {
+                totalMarks++;
+            }
+            caIndex++;
+            uiIndex++;
+            cout << "marks: " << totalMarks << endl;
+            continue;
+        }
+        // else if (line2.find("88f7ace") != string::npos)
+        // {
+        //     cout << line2 << endl;
+        //     cout << "Enter your answer: ";
+        //     getline(cin, userInput[uiIndex]);
+        //     uiIndex++;
+        // }
+    }
+
+    quiz.close();
+}
+
 Course::Course()
 {
     courseName = "";

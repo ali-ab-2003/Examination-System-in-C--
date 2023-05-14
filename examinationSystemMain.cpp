@@ -665,7 +665,7 @@ int main()
         }
         else if (studentChoice == 2)
         {
-
+            student.attemptQuiz("Object Oriented Programming Quiz 1.txt");
             cout << "Available quizzes:-" << endl;
             if (courseRegData[1][nameIndex] == "1")
             {
