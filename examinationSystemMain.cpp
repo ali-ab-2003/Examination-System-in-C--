@@ -261,7 +261,7 @@ int main()
 
         if (tOpts == 1)
         {
-            // teacher.updateQuizBank("Questions for TestBank.txt"); // just to check if function is working properly
+            teacher.updateQuizBank("Questions for TestBank.txt"); // just to check if function is working properly
             if (pfCheck == true)
             {
                 teacher.updateQuizBank("Programming Fundamentals Quiz Bank.txt");
@@ -310,6 +310,50 @@ int main()
         else if (tOpts == 2)
         {
             teacher.createQuiz("Questions for TestBank.txt");
+            if (pfCheck == true)
+            {
+                teacher.createQuiz("Programming Fundamentals Quiz Bank.txt");
+            }
+            else if (oopCheck == true)
+            {
+                teacher.createQuiz("Object Oriented Programming Quiz Bank.txt");
+            }
+            else if (itcCheck == true)
+            {
+                teacher.createQuiz("Introduction to Computing Quiz Bank.txt");
+            }
+            else if (dsCheck == true)
+            {
+                teacher.createQuiz("Data Structures Quiz Bank.txt");
+            }
+            else if (aoaCheck == true)
+            {
+                teacher.createQuiz("Analysis of Algorithms Quiz Bank.txt");
+            }
+            else if (sreCheck == true)
+            {
+                teacher.createQuiz("Software Requirements Engineering Quiz Bank.txt");
+            }
+            else if (rmCheck == true)
+            {
+                teacher.createQuiz("Research Methodology Quiz Bank.txt");
+            }
+            else if (bdaCheck == true)
+            {
+                teacher.createQuiz("Big Data Analysis Quiz Bank.txt");
+            }
+            else if (aiCheck == true)
+            {
+                teacher.createQuiz("Artificial Intelligence Quiz Bank.txt");
+            }
+            else if (dlCheck == true)
+            {
+                teacher.createQuiz("Deep Learning Quiz Bank.txt");
+            }
+            else if (dipCheck == true)
+            {
+                teacher.createQuiz("Digital Image Processing Quiz Bank.txt");
+            }
         }
 
         // for (int i = 0; i < 11; i++)   //code to check if checks implemented are working correctly

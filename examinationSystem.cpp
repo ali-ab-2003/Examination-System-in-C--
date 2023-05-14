@@ -256,7 +256,7 @@ void Teacher::updateQuizBank(string courseName)
     cin >> qType; // ask user to choose the type of question to be added
 
     cout << "Enter the topic: ";
-    cin.ignore();
+    // cin.ignore();
     getline(cin, topic);
 
     bool topicAlreadyExists = false; // to check if the topic already exists
@@ -366,230 +366,103 @@ void Teacher::updateQuizBank(string courseName)
     outputFile.close(); // close the output stream
 }
 
-int countOccurence(const string &s, const string &subs)
-{
-    int count = 0;
-    int position = 0;
-    while ((position = s.find(subs, position)) != string::npos)
-    {
-        count++;
-        position += subs.length();
-    }
-    return count;
-}
-
-// void getRandomQuestions(const string &topics, int numOfQuestions, string &selectedQuestions)
-// {
-//     string t = topics;
-//     vector<string> questions;
-
-//     int startPosition = 0, endPosition = 0;
-
-//     while ((endPosition = t.find("\n\n", startPosition)) != string::npos)
-//     {
-//         string question = t.substr(startPosition, endPosition - startPosition);
-//         questions.push_back(question);
-
-//         startPosition = endPosition + 2;
-//     }
-
-//     if (questions.size() < numOfQuestions)
-//     {
-//         cout << "Not enough questions to select from\n";
-//         return;
-//     }
-
-//     srand(time(0));
-//     vector<bool> selected(questions.size(), false);
-
-//     for (int i = 0; i < numOfQuestions;)
-//     {
-//         int index = rand() % questions.size();
-
-//         if (!selected[index])
-//         {
-//             selectedQuestions += questions[index] + "\n\n";
-//             selected[index] = true;
-//             i++;
-//         }
-//     }
-// }
-
-string getTimeStamp()
-{
-    time_t now = time(0);
-    struct tm *timeInfo;
-    char buffer[80];
-    timeInfo = localtime(&now);
-    strftime(buffer, sizeof(buffer), "%Y%m%d%H%M%S", timeInfo);
-    return string(buffer);
-}
-
-// string getTopicQuestions(const string &questions, const string &topic)
-// {
-//     string topicQuestions = "";
-//     int topicStartPosition = questions.find("a5380ee " + topic + "\n");
-//     if (topicStartPosition == string::npos)
-//     {
-//         return topicQuestions;
-//     }
-
-//     int qStartPosition = questions.find("a5380ee:", topicStartPosition);
-//     int nextTopicStart = questions.find("a5380ee ", qStartPosition);
-
-//     while (qStartPosition != string::npos && (nextTopicStart == string::npos || qStartPosition < nextTopicStart))
-//     {
-//         int qEndPosition = questions.find("\n\n", qStartPosition);
-//         topicQuestions += questions.substr(qStartPosition, qEndPosition - qStartPosition + 1);
-//         qStartPosition = questions.find("a5380ee:", qEndPosition);
-//         nextTopicStart = questions.find("a5380ee ", qStartPosition);
-//     }
-
-//     return topicQuestions;
-// }
-
-struct Questions
-{
-    string topicName = "";
-    string questionStatement = "";
-    string options[4];
-    string descriptiveQuestion;
-    string trueFalse;
-    int correctOption = 0;
-    string optTF[2];
-} arr[100];
-
 void Teacher::createQuiz(string qBankFileName)
 {
-    ifstream inputFile(qBankFileName);
-    int index = -1;
-    int k = 0;
-    string markers[5] = {"a5380ee", "2efcde9", "dabfac4", "b94d27b", "88f7ace"};
-    string temp = "";
-    string s = "";
-    Questions arr[100];
+    int mcqMarks = 0, tfMarks = 0, subMarks = 0, totalMarks = 0;
+    cout << "Enter marks for MCQs: ";
+    cin >> mcqMarks;
+    cout << "Enter marks for True/False: ";
+    cin >> tfMarks;
+    cout << "Enter marks for Subjectives: ";
+    cin >> subMarks;
 
-    if (inputFile.is_open())
+    cout << "Enter the quiz (YYYY-MM-DD HH:MM): ";
+    string deadlineStr = "";
+    cin.ignore();
+    getline(cin, deadlineStr);
+
+    ifstream quizBank(qBankFileName);
+
+    if (!quizBank.is_open())
     {
-        while (getline(inputFile, s))
-        {
-            if (s == markers[0])
-            {
-                getline(inputFile, temp);
-            }
-            else if (s == markers[1])
-            {
-                index++;
-                arr[index].topicName = temp;
-                getline(inputFile, arr[index].questionStatement);
-                getline(inputFile, s);
-                if (s[0] == 'o' && s[1] == 'p')
-                {
-                    arr[index].options[0] = s;
-                    getline(inputFile, arr[index].options[1]);
-                    getline(inputFile, arr[index].options[2]);
-                    getline(inputFile, arr[index].options[3]);
-                }
-                else
-                {
-                    arr[index].questionStatement = arr[index].questionStatement + "\n" + s;
-                    getline(inputFile, arr[index].options[0]);
-                    getline(inputFile, arr[index].options[1]);
-                    getline(inputFile, arr[index].options[2]);
-                    getline(inputFile, arr[index].options[3]);
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    if (arr[index].options[i].find(markers[2]) != string::npos)
-                    {
-                        arr[index].correctOption = i + 1;
-                    }
-                }
-            }
-            else if (s == markers[3])
-            {
-                index++;
-                arr[index].topicName = temp;
-                getline(inputFile, arr[index].trueFalse);
-                getline(inputFile, s);
-                if (s[0] == 'o' && s[1] == 'p')
-                {
-                    arr[index].optTF[0] = s;
-                    getline(inputFile, arr[index].optTF[1]);
-                }
-                else
-                {
-                    arr[index].trueFalse = arr[index].trueFalse + "\n" + s;
-                    getline(inputFile, arr[index].optTF[0]);
-                    getline(inputFile, arr[index].optTF[1]);
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    if (arr[index].optTF[i].find(markers[2]) != string::npos)
-                    {
-                        arr[index].correctOption = i + 1;
-                    }
-                }
-            }
-            else if (s == markers[4])
-            {
-                index++;
-                arr[index].topicName = temp;
-                getline(inputFile, arr[index].descriptiveQuestion);
+        cout << "Failed to open the file: " << qBankFileName << endl;
+        return;
+    }
 
-                while (getline(inputFile, s))
-                {
-                    if (s == markers[0] || s == markers[1] || s == markers[2] || s == markers[3] || s == markers[4])
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        arr[index].descriptiveQuestion = arr[index].descriptiveQuestion + "\n" + s;
-                    }
-                }
-            }
+    string line = "";
+    int numOfMCQs = 0;
+    int numOfTrueFalse = 0;
+    int numOfSubjectives = 0;
+    int numOfTopics = 0;
+    string questions = "";
+
+    while (getline(quizBank, line))
+    {
+        questions += line + "\n"; // store all the questions
+
+        if (line.find("a5380ee") != string::npos)
+        {
+            numOfTopics++;
+        }
+        else if (line.find("2efcde9") != string::npos)
+        {
+            numOfMCQs++;
+        }
+        else if (line.find("b94d27b") != string::npos)
+        {
+            numOfTrueFalse++;
+        }
+        else if (line.find("88f7ace") != string::npos)
+        {
+            numOfSubjectives++;
         }
     }
 
-    inputFile.close();
+    totalMarks = (numOfMCQs * mcqMarks) + (numOfSubjectives * subMarks) + (numOfTrueFalse * tfMarks);
 
-    string quizFileName = course.getCourseName() + ".txt";
-    ofstream quizFile(quizFileName);
+    // time_t currentTime = time(nullptr);
 
-    if (quizFile.is_open())
+    int quizNo = 1;
+    string userInput = "";
+
+    string fileNamesFileName = course.getCourseName() + "Quizzes.txt";
+    ofstream fileNamesFile(fileNamesFileName);
+    if (!fileNamesFile.is_open())
     {
-        for (int i = 0; i <= index; i++)
-        {
-            quizFile << "Topic: " << arr[i].topicName << "\n\n";
-            cout << "Topic: " << arr[i].topicName << "\n\n";
-            quizFile << "Question: " << arr[i].questionStatement << "\n\n";
-            cout << "Question: " << arr[i].questionStatement << "\n\n";
-
-            if (arr[i].options[0].find("op") != string::npos)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    quizFile << arr[i].options[j] << "\n";
-                    cout << arr[i].options[j] << "\n";
-                }
-            }
-            else
-            {
-                quizFile << "Options:\n";
-                cout << "Options:\n";
-                for (int j = 0; j < 4; j++)
-                {
-                    quizFile << j + 1 << ". " << arr[i].options[j] << "\n";
-                    cout << j + 1 << ". " << arr[i].options[j] << "\n";
-                }
-            }
-            quizFile << "Correct option: " << arr[i].correctOption << "\n\n";
-            cout << "Correct option: " << arr[i].correctOption << "\n\n";
-        }
+        cout << "Failed to create file names file" << endl;
     }
 
-    quizFile.close();
+    do
+    {
+        string quizFileName = course.getCourseName() + " Quiz " + to_string(quizNo) + ".txt";
+        ofstream quizFile(quizFileName);
+        if (!quizFile.is_open())
+        {
+            cout << "Failed to create the quiz file";
+            return;
+        }
+
+        quizFile << course.getCourseName() << " Quiz" << endl;
+        quizFile << "Rubric: Each mcq contains " << mcqMarks << " marks, each true/false has " << tfMarks << " marks and each subjective question has " << subMarks << " marks!" << endl;
+        quizFile << "Deadline: " << deadlineStr << endl;
+        quizFile << questions;
+
+        quizFile.close();
+
+        cout << "Do you want to create more quizzes? (yes/no): ";
+        cin >> userInput;
+
+        quizNo++;
+    } while (userInput == "yes");
+
+    quizBank.close();
+
+    // to check if the code is working correctly
+    // cout << "Number of MCQs: " << numOfMCQs << endl;
+    // cout << "Number of True/False: " << numOfTrueFalse << endl;
+    // cout << "Number of Subjectives: " << numOfSubjectives << endl;
+
+    cout << "Quiz created successfully!" << endl;
 }
 
 Student::Student()
@@ -646,35 +519,3 @@ string Course::getCourseInstructor()
 {
     return courseInstructor;
 }
-
-// Question::Question()
-// {
-//     questionText = "";
-//     questionType = "";
-// }
-
-// Question::Question(string qText, string qType)
-// {
-//     questionText = qText;
-//     questionType = qType;
-// }
-
-// void Question::setQuestionText(string qText)
-// {
-//     questionText = qText;
-// }
-
-// void Question::setQuestionType(string qType)
-// {
-//     questionType = qType;
-// }
-
-// string Question::getQuestionText()
-// {
-//     return questionText;
-// }
-
-// string Question::getQuestionType()
-// {
-//     return questionType;
-// }
