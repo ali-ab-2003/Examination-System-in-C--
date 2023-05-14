@@ -444,6 +444,7 @@ void Teacher::createQuiz(string qBankFileName)
 
         quizFile << course.getCourseName() << " Quiz" << endl;
         quizFile << "Rubric: Each mcq contains " << mcqMarks << " marks, each true/false has " << tfMarks << " marks and each subjective question has " << subMarks << " marks!" << endl;
+        quizFile << "Total Marks: " << totalMarks << endl;
         quizFile << "Deadline: " << deadlineStr << endl;
         quizFile << questions;
 

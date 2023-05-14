@@ -1,1 +1,1 @@
-setCourse
+teacher.updateQuizBank("Questions for TestBank.txt"); // just to check if function is working properly
