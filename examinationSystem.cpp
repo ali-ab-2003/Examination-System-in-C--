@@ -425,7 +425,7 @@ void Teacher::createQuiz(string qBankFileName)
     int quizNo = 1;
     string userInput = "";
 
-    string fileNamesFileName = course.getCourseName() + "Quizzes.txt";
+    string fileNamesFileName = course.getCourseName() + " Quizzes.txt";
     ofstream fileNamesFile(fileNamesFileName);
     if (!fileNamesFile.is_open())
     {
@@ -453,10 +453,12 @@ void Teacher::createQuiz(string qBankFileName)
         cout << "Do you want to create more quizzes? (yes/no): ";
         cin >> userInput;
 
+        fileNamesFile << quizFileName << endl;
         quizNo++;
     } while (userInput == "yes");
 
     quizBank.close();
+    fileNamesFile.close();
 
     // to check if the code is working correctly
     // cout << "Number of MCQs: " << numOfMCQs << endl;
@@ -470,11 +472,45 @@ Student::Student()
 {
     numRegisteredCourses = 0;
     rollNo = "";
+    registeredCourses = "";
+}
+
+Student::Student(string rCourses, int nRCourses, string RollNo)
+{
+    numRegisteredCourses = nRCourses;
+    rollNo = RollNo;
+    int size = 0;
+    registeredCourses = rCourses;
 }
 
 void Student::setRollNo(string RollNo)
 {
     rollNo = RollNo;
+}
+
+string Student::getRollNo()
+{
+    return rollNo;
+}
+
+void Student::setNoRegCourses(int nrc)
+{
+    numRegisteredCourses = nrc;
+}
+
+int Student::getNoRegCourses()
+{
+    return numRegisteredCourses;
+}
+
+void Student::setRegCourses(string regCourses)
+{
+    registeredCourses = regCourses;
+}
+
+string Student::getRegCourses()
+{
+    return registeredCourses;
 }
 
 Course::Course()

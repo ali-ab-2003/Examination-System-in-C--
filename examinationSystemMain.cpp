@@ -393,7 +393,7 @@ int main()
             userData[numOfLines1][0] = line1;
             numOfLines1++;
 
-            if (numOfLines1 == 11)
+            if (numOfLines1 == 216)
             {
                 break;
             }
@@ -404,7 +404,7 @@ int main()
             userData[numOfPass1][1] = passLine1;
             numOfPass1++;
 
-            if (numOfPass1 == 11)
+            if (numOfPass1 == 216)
             {
                 break;
             }
@@ -475,7 +475,7 @@ int main()
 
         if (!namesFile.is_open() || !emailsFile.is_open() || !rollNoFile.is_open())
         {
-            cout << "unable to open files";
+            cout << "Unable to open required files";
         }
 
         string **studentCredentials = new string *[numOfStudents];
@@ -509,15 +509,362 @@ int main()
             }
         }
 
-        // for (int i = 0; i < 11; i++)    //code to check if checks implemented are working correctly
+        // for (int i = 0; i < 216; i++) // code to check if checks implemented are working correctly
         // {
         //     for (int j = 0; j < 2; j++)
         //     {
         //         cout << userData[i][j];
-        //         cout << " ";
+        //         cout << ": ";
         //     }
         //     cout << endl;
         // }
+
+        string *studentOptions = new string[3];
+        studentOptions[0] = "1. See Registered Courses";
+        studentOptions[1] = "2. Attempt Quiz";
+        studentOptions[2] = "3. View your result";
+
+        cout << "Welcome back, " << user.getName() << "!" << endl;
+        Menu studentOptionsMenu("Student Functions Menu", studentOptions, 3);
+        studentOptionsMenu.displayMenu();
+        int studentChoice = 0;
+        studentChoice = studentOptionsMenu.getUserInput();
+
+        string courseRegData[12][216];
+
+        ifstream sNames("Student Names.txt");
+        ifstream cRegData("Course Registration Data.txt");
+        if (!sNames)
+        {
+            cout << "Error opening the file" << endl;
+        }
+        if (!cRegData)
+        {
+            cout << "Error opening the file." << endl;
+        }
+
+        for (int i = 0; i < 216; ++i)
+        {
+            if (!getline(sNames, courseRegData[0][i]))
+            {
+                cout << "Error reading the file." << endl;
+            }
+        }
+
+        string line0 = "";
+        int column = 0;
+        while (getline(cRegData, line0))
+        {
+            istringstream iss(line0);
+            string value = "";
+            int row = 1;
+            while (getline(iss, value, ','))
+            {
+                courseRegData[row][column] = value;
+                ++row;
+            }
+            ++column;
+        }
+
+        // for (int i = 0; i < 12; i++)
+        // {
+        //     cout << courseRegData[i][0] << endl;
+        // }
+
+        sNames.close();
+        cRegData.close();
+
+        int nameIndex = -1;
+
+        for (int i = 0; i < 216; ++i)
+        {
+            if (courseRegData[0][i] == user.getName())
+            {
+                nameIndex = i;
+                break;
+            }
+        }
+
+        int numOfRegCourses = 0;
+        string listOfRegCourses = "";
+
+        for (int i = 1; i < 12; i++)
+        {
+            if (courseRegData[i][nameIndex] == "1")
+            {
+                numOfRegCourses++;
+            }
+        }
+
+        // cout << "Reg courses: " << numOfRegCourses << endl;
+        student.setNoRegCourses(numOfRegCourses);
+        // listOfRegCourses = new string[numOfRegCourses];
+
+        if (courseRegData[1][nameIndex] == "1")
+        {
+            listOfRegCourses += pf.getCourseName() + "\n";
+        }
+
+        if (courseRegData[2][nameIndex] == "1")
+        {
+            listOfRegCourses += oop.getCourseName() + "\n";
+        }
+
+        if (courseRegData[3][nameIndex] == "1")
+        {
+            listOfRegCourses += itc.getCourseName() + "\n";
+        }
+
+        if (courseRegData[4][nameIndex] == "1")
+        {
+            listOfRegCourses += ds.getCourseName() + "\n";
+        }
+
+        if (courseRegData[5][nameIndex] == "1")
+        {
+            listOfRegCourses += aoa.getCourseName() + "\n";
+        }
+
+        if (courseRegData[6][nameIndex] == "1")
+        {
+            listOfRegCourses += sre.getCourseName() + "\n";
+        }
+
+        if (courseRegData[7][nameIndex] == "1")
+        {
+            listOfRegCourses += rm.getCourseName() + "\n";
+        }
+
+        if (courseRegData[8][nameIndex] == "1")
+        {
+            listOfRegCourses += bda.getCourseName() + "\n";
+        }
+
+        if (courseRegData[9][nameIndex] == "1")
+        {
+            listOfRegCourses += ai.getCourseName() + "\n";
+        }
+
+        if (courseRegData[10][nameIndex] == "1")
+        {
+            listOfRegCourses += dl.getCourseName() + "\n";
+        }
+
+        if (courseRegData[11][nameIndex] == "1")
+        {
+            listOfRegCourses += dip.getCourseName() + "\n";
+        }
+
+        // cout << "List of registered courses: " << listOfRegCourses << endl;
+        student.setRegCourses(listOfRegCourses);
+
+        if (studentChoice == 1)
+        {
+            cout << "You are currently enrolled in the following courses:" << endl
+                 << listOfRegCourses << endl;
+        }
+        else if (studentChoice == 2)
+        {
+
+            cout << "Available quizzes:-" << endl;
+            if (courseRegData[1][nameIndex] == "1")
+            {
+                cout << "Programming fundamentals available quizzes:" << endl;
+                ifstream pfQuizzesFile("Programming Fundamentals Quizzes.txt");
+                string pfLine = "";
+                if (pfQuizzesFile.is_open())
+                {
+                    while (getline(pfQuizzesFile, pfLine))
+                    {
+                        cout << pfLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Programming fundamentals' quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[2][nameIndex] == "1")
+            {
+                cout << "Object Oriented Programming available quizzes:" << endl;
+                ifstream oopQuizzesFile("Object Oriented Programming Quizzes.txt");
+                string oopLine = "";
+                if (oopQuizzesFile.is_open())
+                {
+                    while (getline(oopQuizzesFile, oopLine))
+                    {
+                        cout << oopLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Object Oriented Programming's quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[3][nameIndex] == "1")
+            {
+                cout << "Introduction to Computing available quizzes:" << endl;
+                ifstream itcQuizzesFile("Introduction to Computing Quizzes.txt");
+                string itcLine = "";
+                if (itcQuizzesFile.is_open())
+                {
+                    while (getline(itcQuizzesFile, itcLine))
+                    {
+                        cout << itcLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Introduction to Computing's quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[4][nameIndex] == "1")
+            {
+                cout << "Data Structures available quizzes:" << endl;
+                ifstream dsQuizzesFile("Data Structures Quizzes.txt");
+                string dsLine = "";
+                if (dsQuizzesFile.is_open())
+                {
+                    while (getline(dsQuizzesFile, dsLine))
+                    {
+                        cout << dsLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Data Structures' quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[5][nameIndex] == "1")
+            {
+                cout << "Analysis of Algorithms available quizzes:" << endl;
+                ifstream aoaQuizzesFile("Analysis of Algorithms Quizzes.txt");
+                string aoaLine = "";
+                if (aoaQuizzesFile.is_open())
+                {
+                    while (getline(aoaQuizzesFile, aoaLine))
+                    {
+                        cout << aoaLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Analysis of Algorithms' quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[6][nameIndex] == "1")
+            {
+                cout << "Software Research Engineering available quizzes:" << endl;
+                ifstream sreQuizzesFile("Software Research Engineering Quizzes.txt");
+                string sreLine = "";
+                if (sreQuizzesFile.is_open())
+                {
+                    while (getline(sreQuizzesFile, sreLine))
+                    {
+                        cout << sreLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Software Research Engineering's quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[7][nameIndex] == "1")
+            {
+                cout << "Research Methodology available quizzes:" << endl;
+                ifstream rmQuizzesFile("Research Methodology Quizzes.txt");
+                string rmLine = "";
+                if (rmQuizzesFile.is_open())
+                {
+                    while (getline(rmQuizzesFile, rmLine))
+                    {
+                        cout << rmLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Research Methodology's quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[8][nameIndex] == "1")
+            {
+                cout << "Big Data Analytics available quizzes:" << endl;
+                ifstream bdaQuizzesFile("Big Data Analytics Quizzes.txt");
+                string bdaLine = "";
+                if (bdaQuizzesFile.is_open())
+                {
+                    while (getline(bdaQuizzesFile, bdaLine))
+                    {
+                        cout << bdaLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Big Data Analytics' quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[9][nameIndex] == "1")
+            {
+                cout << "Artificial Intelligence available quizzes:" << endl;
+                ifstream aiQuizzesFile("Artificial Intelligence Quizzes.txt");
+                string aiLine = "";
+                if (aiQuizzesFile.is_open())
+                {
+                    while (getline(aiQuizzesFile, aiLine))
+                    {
+                        cout << aiLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Artificial Intelligence's quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[10][nameIndex] == "1")
+            {
+                cout << "Deep Learning available quizzes:" << endl;
+                ifstream dlQuizzesFile("Deep Learning Quizzes.txt");
+                string dlLine = "";
+                if (dlQuizzesFile.is_open())
+                {
+                    while (getline(dlQuizzesFile, dlLine))
+                    {
+                        cout << dlLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Deep Learning's quizzes file/it doesn't exist!" << endl;
+                }
+            }
+
+            if (courseRegData[11][nameIndex] == "1")
+            {
+                cout << "Digital Image Processing available quizzes:" << endl;
+                ifstream dipQuizzesFile("Digital Image Processing Quizzes.txt");
+                string dipLine = "";
+                if (dipQuizzesFile.is_open())
+                {
+                    while (getline(dipQuizzesFile, dipLine))
+                    {
+                        cout << dipLine << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error opening Digital Image Processing's quizzes file/it doesn't exist!" << endl;
+                }
+            }
+        }
     }
 
     return 0;

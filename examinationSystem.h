@@ -64,17 +64,20 @@ public:
 class Student : public User
 {
 private:
-    Course *registeredCourses;
+    string registeredCourses;
     int numRegisteredCourses;
     string rollNo;
 
 public:
     Student();
-    Student(Course *rCourses, int nRCourses, string RollNo);
+    Student(string rCourses, int nRCourses, string RollNo);
     void setRollNo(string RollNo);
+    string getRollNo();
     void setNoRegCourses(int nrc);
-    void setRegCourses();
-    void attemptQuiz();
+    int getNoRegCourses();
+    void setRegCourses(string regCourses);
+    string getRegCourses();
+    void attemptQuiz(string quizFileName);
     void viewResults();
 };
 
