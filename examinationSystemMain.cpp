@@ -356,6 +356,14 @@ int main()
             }
         }
 
+        delete[] teacherFunctions;
+
+        for (int i = 0; i < numOfTeachers; i++)
+        {
+            delete[] teacherCredentials[i];
+        }
+        delete[] teacherCredentials;
+
         // for (int i = 0; i < 11; i++)   //code to check if checks implemented are working correctly
         // {
         //     for (int j = 0; j < 2; j++)
@@ -865,7 +873,23 @@ int main()
                 }
             }
         }
+
+        delete[] studentOptions;
+
+        for (int i = 0; i < numOfStudents; i++)
+        {
+            delete[] studentCredentials[i];
+        }
+        delete[] studentCredentials;
     }
+
+    delete[] userTypeOptions;
+
+    for (int i = 0; i < 11; i++)
+    {
+        delete[] userData[i];
+    }
+    delete[] userData;
 
     return 0;
 }

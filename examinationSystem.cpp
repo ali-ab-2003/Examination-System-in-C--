@@ -618,6 +618,9 @@ void Student::attemptQuiz(string quizFileName)
         //     getline(cin, userInput[uiIndex]);
         //     uiIndex++;
         // }
+
+        delete[] correctAns;
+        delete[] userInput;
     }
 
     quiz.close();
