@@ -1,6 +1,6 @@
 Object Oriented Programming Quiz
 Rubric: Each mcq contains 1 marks, each true/false has 1 marks and each subjective question has 2 marks!
-Deadline: 2023-05-17 18:15
+Deadline: 2023-05-22 18:15
 a5380ee
 General questions
 

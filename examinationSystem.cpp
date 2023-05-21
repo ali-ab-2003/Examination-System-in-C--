@@ -585,43 +585,64 @@ void Student::attemptQuiz(string quizFileName)
 
     string in = "";
     int caIndex = 0, uiIndex = 0;
+    // cin.ignore();
     string line2 = "";
     while (getline(quiz, line2))
     {
-        cout << line2 << endl;
+        // cout << line2 << endl;
         if (line2.find("dabfac4") != string::npos)
         {
             // cout << "ee";
-            correctAns[caIndex] = line2;
-            stringstream ss;
-            ss << "dabfac4: option. ";
+            // correctAns[caIndex] = line2;
+            correctAns[caIndex] = line2.back();
+            // stringstream ss;
+            // ss << "dabfac4: option. ";
+            // ss << "dabfac4: option. " << line2.back();
+            // cin.ignore();
             cout << "Enter your answer: ";
-            getline(cin, in);
             cin.ignore();
-            ss << in;
-            userInput[uiIndex] = ss.str(); //"dabfac4: option." + ;
-            cout << "User input:" << userInput[uiIndex] << endl;
-            cout << "User input:" << correctAns[caIndex] << endl;
-            if (correctAns[caIndex] == userInput[uiIndex])
+            getline(cin, userInput[uiIndex]);
+            in = userInput[uiIndex].back();
+            // ss << in;
+            // userInput[uiIndex] = ss.str(); //"dabfac4: option." + ;
+            // cout << "User input:" << userInput[uiIndex] << endl;
+            // cout << "User input:" << correctAns[caIndex] << endl;
+            if (correctAns[caIndex] == in)
             {
                 totalMarks++;
             }
             caIndex++;
             uiIndex++;
-            cout << "marks: " << totalMarks << endl;
+            // cout << "marks: " << totalMarks << endl;
             continue;
         }
-        // else if (line2.find("88f7ace") != string::npos)
-        // {
-        //     cout << line2 << endl;
-        //     cout << "Enter your answer: ";
-        //     getline(cin, userInput[uiIndex]);
-        //     uiIndex++;
-        // }
 
-        delete[] correctAns;
-        delete[] userInput;
+        cout << line2 << endl;
+        if (line2.find("88f7ace") != string::npos)
+        {
+            // cout << line2 << endl;
+            cout << "Enter your answer: ";
+            getline(cin, userInput[uiIndex]);
+            int score = 0;
+            for (int i = 0; i < userInput[uiIndex].length(); i++)
+            {
+                score++;
+            }
+            if (score > 6)
+            {
+                totalMarks += 2;
+            }
+            cout << totalMarks;
+
+            uiIndex++;
+        }
+        // cout << line2 << endl;
     }
+
+    cout << "Total makrs: " << totalMarks << endl;
+
+    delete[] correctAns;
+    delete[] userInput;
 
     quiz.close();
 }
