@@ -618,25 +618,6 @@ void Student::attemptQuiz(string quizFileName)
         }
 
         cout << line2 << endl;
-        if (line2.find("88f7ace") != string::npos)
-        {
-            // cout << line2 << endl;
-            cout << "Enter your answer: ";
-            getline(cin, userInput[uiIndex]);
-            int score = 0;
-            for (int i = 0; i < userInput[uiIndex].length(); i++)
-            {
-                score++;
-            }
-            if (score > 6)
-            {
-                totalMarks += 2;
-            }
-            cout << totalMarks;
-
-            uiIndex++;
-        }
-        // cout << line2 << endl;
     }
 
     cout << "Total makrs: " << totalMarks << endl;
